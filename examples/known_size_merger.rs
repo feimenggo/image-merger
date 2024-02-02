@@ -1,12 +1,9 @@
 extern crate image_merger;
 
-use image::GenericImage;
 use image_merger::*;
 
 const IMAGE_WIDTH: u32 = 100;
 const IMAGE_HEIGHT: u32 = 100;
-const IMAGES_PER_ROW: u32 = 10;
-const TOTAL_IMAGES: u32 = 100;
 
 fn generate_known_image() -> BufferedImage<Rgba<u8>> {
     // Create an image buffer with the given dimensions
