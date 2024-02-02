@@ -11,3 +11,4 @@ target/
 
 # Ignore all auto generated development VSCode files
 /.vscode
+/.idea
