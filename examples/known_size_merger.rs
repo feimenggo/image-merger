@@ -2,8 +2,8 @@ extern crate image_merger;
 
 use image_merger::*;
 
-const IMAGE_WIDTH: u32 = 100;
-const IMAGE_HEIGHT: u32 = 100;
+const IMAGE_WIDTH: u32 = 1080;
+const IMAGE_HEIGHT: u32 = 1920;
 const IMAGES_PER_ROW: u32 = 10;
 const TOTAL_IMAGES: u32 = 100;
 
@@ -20,21 +20,19 @@ fn main() -> () {
 
     // Create an instance of our merger, this is what will manage the merging of our images. It takes one generic
     // parameter, T, which denotes the type of pixel the canvas and pasted images have.
-    let mut merger: KnownSizeMerger<Rgba<u8>, _> = KnownSizeMerger::new(
-        (IMAGE_WIDTH, IMAGE_HEIGHT),
-        IMAGES_PER_ROW,
-        TOTAL_IMAGES,
-        None,
+    let mut merger: KnownSizeMerger<Rgba<u8>, _> = KnownSizeMerger::new_dimensions(
+        (IMAGE_WIDTH, IMAGE_HEIGHT * 2),
     );
 
     // Let's go through and paste our images onto the canvas, we can do this one of two ways:
     // 1. We can paste the images one at a time in a loop, using the "push()" method, or:
     // 2: We can use the "bulk_push()" method to paste multiple images at once.
     // For this example, we'll use the "bulk_push()" method.
-    let images: Vec<&BufferedImage<Rgba<u8>>> = vec![&known_image; TOTAL_IMAGES as usize];
-    merger.bulk_push(&images);
+    merger.push_bottom(&known_image);
+    merger.push_bottom(&known_image);
 
     // Finally, we can get the canvas and save it - we should have a red image with 10000 pixels.
     let canvas = merger.get_canvas();
     canvas.save("examples/known_size_merger.png").unwrap();
+    print!("合并成功")
 }

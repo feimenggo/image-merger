@@ -39,6 +39,7 @@ where
     last_pasted_index: i32, // The index of the last pasted image, starts at -1 if not images have been pasted.
     total_rows: u32,        // The total number of rows currently on the canvas.
     padding: Option<Padding>,
+    y: u32,
 }
 
 impl<P, Container> KnownSizeMerger<P, Container>
@@ -93,6 +94,7 @@ where
             last_pasted_index: -1,
             total_rows,
             padding,
+            y: 0,
         })
     }
 
@@ -200,6 +202,25 @@ where
             last_pasted_index: -1,
             total_rows,
             padding,
+            y: 0,
+        }
+    }
+
+    pub fn new_dimensions(image_dimensions: (u32, u32)) -> Self {
+        let canvas = Image::new(
+            image_dimensions.0,
+            image_dimensions.1,
+        );
+
+        Self {
+            canvas: ImageCell::new(canvas),
+            image_dimensions,
+            num_images: 0,
+            images_per_row: 0,
+            last_pasted_index: -1,
+            total_rows: 0,
+            padding: None,
+            y: 0,
         }
     }
 
@@ -271,6 +292,13 @@ where
 
         self.last_pasted_index += images.len() as i32;
         self.num_images += images.len() as u32;
+    }
+
+    fn push_bottom(&mut self, image: &Image<P, image::ImageBuffer<P, Container>>) {
+        paste(&self.canvas, image, Point { x: 0, y: self.y });
+        self.y += image.height();
+        self.last_pasted_index += 1;
+        self.num_images += 1;
     }
 }
 

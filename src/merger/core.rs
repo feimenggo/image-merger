@@ -44,4 +44,6 @@ where
     /// does not need to take ownership of the images, it only needs to read them. The pixel type, `P`, of the images must match the canvas, and
     /// their `Container` must be dereferenceable to a slice of `P::Subpixel`s.
     fn bulk_push(&mut self, images: &[&Image<P, image::ImageBuffer<P, Container>>]);
+
+    fn push_bottom(&mut self, image: &Image<P, image::ImageBuffer<P, Container>>);
 }
