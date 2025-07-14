@@ -319,7 +319,7 @@ where
             .into_par_iter()
             .map(|image| {
                 let (width, height) = self.image_dimensions;
-                return resize_nearest_neighbor(image, width, height);
+                resize_nearest_neighbor(image, width, height)
             })
             .collect();
 
