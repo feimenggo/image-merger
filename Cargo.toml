@@ -11,6 +11,6 @@ codegen-units = 1
 lto = false
 
 [dependencies]
-image = "0.25.6"
-rayon = "1.10.0"
+image = "0.25.10"
+rayon = "1.11.0"
 num-traits = "0.2.19"
